@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, Star, Zap } from 'lucide-react';
-import { contact } from '../data';
+import { contact, heroImage } from '../data';
 
 const marqueeItems = [
   'ПРОКАТ АВТО',
@@ -131,6 +132,42 @@ function CarSilhouette({ className = '' }: { className?: string }) {
       <circle cx="150" cy="165" r="4" fill="#FF4D00" />
       <circle cx="450" cy="165" r="4" fill="#FF4D00" />
     </svg>
+  );
+}
+
+/**
+ * Hero hero car photo with SVG fallback.
+ * Real Unsplash cinematic shot — falls back to brand-orange SVG on CDN failure.
+ */
+function HeroCarImage() {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return <CarSilhouette className="w-full max-w-[560px] drop-shadow-[0_30px_50px_rgba(255,77,0,0.25)]" />;
+  }
+
+  return (
+    <div className="relative w-full max-w-[640px]">
+      {/* Orange glow backdrop */}
+      <div className="pointer-events-none absolute inset-0 -z-10 blur-[60px] opacity-40"
+        style={{ background: 'radial-gradient(ellipse at center, #FF4D00 0%, transparent 60%)' }} />
+
+      {/* Photo — cinematic aspect */}
+      <div className="relative overflow-hidden rounded-[8px] border-2 border-[#27272A] bg-[#0A0A0B] shadow-[0_30px_80px_rgba(255,77,0,0.15)]">
+        <img
+          src={heroImage}
+          alt="Премиум автомобиль в аренду"
+          onError={() => setFailed(true)}
+          className="aspect-[16/11] w-full object-cover"
+        />
+        {/* Subtle brand overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0A0A0B]/40" />
+        {/* Corner accent */}
+        <div className="absolute bottom-4 right-4 z-10 rounded-[2px] bg-[#FF4D00] px-3 py-1.5 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg">
+          Premium Fleet
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -268,9 +305,9 @@ export default function Hero() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 flex items-center justify-center h-full"
+              className="relative z-10 flex items-center justify-center h-full w-full"
             >
-              <CarSilhouette className="w-full max-w-[560px] drop-shadow-[0_30px_50px_rgba(255,77,0,0.25)]" />
+              <HeroCarImage />
             </motion.div>
 
             {/* Floating stat: 42+ авто */}

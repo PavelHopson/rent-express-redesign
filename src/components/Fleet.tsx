@@ -3,6 +3,36 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Fuel, Settings2 } from 'lucide-react';
 import { cars, categories, type Car, type CarCategory } from '../data';
 
+/**
+ * Car image with graceful SVG fallback when Unsplash is unreachable.
+ * Keeps the BRUTAL aesthetic even when CDN fails.
+ */
+function CarImage({ car, variant }: { car: Car; variant: 'suv' | 'coupe' | 'sedan' }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed || !car.image) {
+    return (
+      <div className="absolute inset-0 flex items-end justify-center p-3 transition-transform duration-500 group-hover:scale-[1.06]">
+        <CarSilhouette variant={variant} />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <img
+        src={car.image}
+        alt={`${car.brand} ${car.model}`}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+      />
+      {/* Dark gradient from bottom for text readability when overlayed */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/50 via-transparent to-transparent" />
+    </>
+  );
+}
+
 type FilterId = 'all' | CarCategory;
 
 const filters: { id: FilterId; label: string }[] = [
@@ -191,18 +221,14 @@ export default function Fleet() {
                   <span className="number-badge">{categoryLabel[car.category]}</span>
                 </div>
 
-                {/* Silhouette */}
-                <div className="relative mt-4 aspect-[16/7] w-full overflow-hidden rounded-[4px] bg-gradient-to-b from-[#121214] to-[#0A0A0B] border border-[#27272A]">
-                  <div className="absolute inset-0 flex items-end justify-center p-3 transition-transform duration-500 group-hover:scale-[1.06]">
-                    <CarSilhouette variant={silhouette} />
-                  </div>
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      backgroundImage:
-                        'repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255,77,0,0.04) 20px, rgba(255,77,0,0.04) 21px)',
-                    }}
-                  />
+                {/* Car photo (with SVG fallback) */}
+                <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-[4px] bg-gradient-to-b from-[#121214] to-[#0A0A0B] border border-[#27272A]">
+                  <CarImage car={car} variant={silhouette} />
+                  {car.priceOld && (
+                    <span className="absolute left-3 top-3 z-10 rounded-[2px] bg-[#FF4D00] px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg">
+                      -{Math.round(((car.priceOld - car.pricePerDay) / car.priceOld) * 100)}%
+                    </span>
+                  )}
                 </div>
 
                 {/* Brand + model */}

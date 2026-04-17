@@ -12,23 +12,43 @@ export interface Car {
   year: number;
   features: string[];
   available: boolean;
+  image: string;
 }
 
+/* Real car photos from Unsplash (free commercial license).
+ * Each URL is an Unsplash photo chosen to visually match the car type/color.
+ */
 export const cars: Car[] = [
-  { id: 'solaris', brand: 'Hyundai', model: 'Solaris', category: 'economy', pricePerDay: 1700, priceOld: 2200, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Кондиционер', 'USB', 'ABS'], available: true },
-  { id: 'logan', brand: 'Renault', model: 'Logan', category: 'economy', pricePerDay: 1800, transmission: 'AT', fuel: 'Бензин', year: 2021, features: ['Кондиционер', 'Bluetooth'], available: true },
-  { id: 'rio', brand: 'Kia', model: 'Rio', category: 'economy', pricePerDay: 1900, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Климат', 'USB', 'ABS'], available: true },
-  { id: 'polo', brand: 'Volkswagen', model: 'Polo', category: 'comfort', pricePerDay: 2400, priceOld: 2900, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Климат-контроль', 'Круиз', 'Подогрев'], available: true },
-  { id: 'rapid', brand: 'Skoda', model: 'Rapid', category: 'comfort', pricePerDay: 2600, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Климат', 'Круиз', 'Подогрев'], available: true },
-  { id: 'corolla', brand: 'Toyota', model: 'Corolla', category: 'comfort', pricePerDay: 3200, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Климат', 'Круиз', 'Камера'], available: true },
-  { id: 'camry', brand: 'Toyota', model: 'Camry', category: 'business', pricePerDay: 5700, priceOld: 6500, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Кожа', 'Круиз', 'Камера 360°'], available: true },
-  { id: 'eclass', brand: 'Mercedes-Benz', model: 'E-Class', category: 'business', pricePerDay: 8900, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Кожа', 'Массаж', 'Burmester'], available: true },
-  { id: 'superb', brand: 'Skoda', model: 'Superb', category: 'business', pricePerDay: 4800, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Кожа', 'Климат 3-зон'], available: true },
-  { id: 'x5', brand: 'BMW', model: 'X5', category: 'premium', pricePerDay: 12500, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['AWD', 'Кожа', 'Панорама'], available: true },
-  { id: 'sclass', brand: 'Mercedes-Benz', model: 'S-Class', category: 'premium', pricePerDay: 21700, transmission: 'AT', fuel: 'Бензин', year: 2024, features: ['VIP-пакет', 'Шофёр опция'], available: true },
-  { id: 'qashqai', brand: 'Nissan', model: 'Qashqai', category: 'suv', pricePerDay: 3800, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['AWD', 'Климат', 'Круиз'], available: true },
-  { id: 'rav4', brand: 'Toyota', model: 'RAV4', category: 'suv', pricePerDay: 4500, transmission: 'AT', fuel: 'Гибрид', year: 2023, features: ['AWD', 'Камера 360°', 'LED'], available: true },
+  { id: 'solaris', brand: 'Hyundai', model: 'Solaris', category: 'economy', pricePerDay: 1700, priceOld: 2200, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Кондиционер', 'USB', 'ABS'], available: true,
+    image: 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=900&q=80&auto=format&fit=crop' },
+  { id: 'logan', brand: 'Renault', model: 'Logan', category: 'economy', pricePerDay: 1800, transmission: 'AT', fuel: 'Бензин', year: 2021, features: ['Кондиционер', 'Bluetooth'], available: true,
+    image: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=900&q=80&auto=format&fit=crop' },
+  { id: 'rio', brand: 'Kia', model: 'Rio', category: 'economy', pricePerDay: 1900, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Климат', 'USB', 'ABS'], available: true,
+    image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=900&q=80&auto=format&fit=crop' },
+  { id: 'polo', brand: 'Volkswagen', model: 'Polo', category: 'comfort', pricePerDay: 2400, priceOld: 2900, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Климат-контроль', 'Круиз', 'Подогрев'], available: true,
+    image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=900&q=80&auto=format&fit=crop' },
+  { id: 'rapid', brand: 'Skoda', model: 'Rapid', category: 'comfort', pricePerDay: 2600, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Климат', 'Круиз', 'Подогрев'], available: true,
+    image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=900&q=80&auto=format&fit=crop' },
+  { id: 'corolla', brand: 'Toyota', model: 'Corolla', category: 'comfort', pricePerDay: 3200, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Климат', 'Круиз', 'Камера'], available: true,
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=900&q=80&auto=format&fit=crop' },
+  { id: 'camry', brand: 'Toyota', model: 'Camry', category: 'business', pricePerDay: 5700, priceOld: 6500, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Кожа', 'Круиз', 'Камера 360°'], available: true,
+    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=900&q=80&auto=format&fit=crop' },
+  { id: 'eclass', brand: 'Mercedes-Benz', model: 'E-Class', category: 'business', pricePerDay: 8900, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['Кожа', 'Массаж', 'Burmester'], available: true,
+    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=900&q=80&auto=format&fit=crop' },
+  { id: 'superb', brand: 'Skoda', model: 'Superb', category: 'business', pricePerDay: 4800, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['Кожа', 'Климат 3-зон'], available: true,
+    image: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=900&q=80&auto=format&fit=crop' },
+  { id: 'x5', brand: 'BMW', model: 'X5', category: 'premium', pricePerDay: 12500, transmission: 'AT', fuel: 'Бензин', year: 2023, features: ['AWD', 'Кожа', 'Панорама'], available: true,
+    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900&q=80&auto=format&fit=crop' },
+  { id: 'sclass', brand: 'Mercedes-Benz', model: 'S-Class', category: 'premium', pricePerDay: 21700, transmission: 'AT', fuel: 'Бензин', year: 2024, features: ['VIP-пакет', 'Шофёр опция'], available: true,
+    image: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=900&q=80&auto=format&fit=crop' },
+  { id: 'qashqai', brand: 'Nissan', model: 'Qashqai', category: 'suv', pricePerDay: 3800, transmission: 'AT', fuel: 'Бензин', year: 2022, features: ['AWD', 'Климат', 'Круиз'], available: true,
+    image: 'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?w=900&q=80&auto=format&fit=crop' },
+  { id: 'rav4', brand: 'Toyota', model: 'RAV4', category: 'suv', pricePerDay: 4500, transmission: 'AT', fuel: 'Гибрид', year: 2023, features: ['AWD', 'Камера 360°', 'LED'], available: true,
+    image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=900&q=80&auto=format&fit=crop' },
 ];
+
+/* Hero featured image — large cinematic shot */
+export const heroImage = 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600&q=85&auto=format&fit=crop';
 
 export const categories: { id: CarCategory; label: string; description: string; from: number }[] = [
   { id: 'economy', label: 'Эконом', description: 'Для ежедневных поездок', from: 1700 },

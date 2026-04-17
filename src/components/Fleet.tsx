@@ -5,14 +5,32 @@ import { cars, categories, type Car, type CarCategory } from '../data';
 import CarIllustration from './CarIllustration';
 
 /**
- * Detailed SVG car illustration — custom-crafted per category.
- * Local (no CDN), brand-themed palette, premium look.
+ * Real photo from rent-kld.ru — with SVG fallback if image fails to load.
+ * Best of both: real car photos for the demo + guaranteed never-broken visuals.
  */
 function CarImage({ car }: { car: Car; variant?: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed || !car.image) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center p-4 transition-transform duration-500 group-hover:scale-[1.08]">
+        <CarIllustration car={car} />
+      </div>
+    );
+  }
+
   return (
-    <div className="absolute inset-0 flex items-center justify-center p-4 transition-transform duration-500 group-hover:scale-[1.08]">
-      <CarIllustration car={car} />
-    </div>
+    <>
+      <img
+        src={car.image}
+        alt={`${car.brand} ${car.model}`}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/60 via-transparent to-transparent" />
+    </>
   );
 }
 

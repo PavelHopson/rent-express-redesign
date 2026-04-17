@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, Star, Zap } from 'lucide-react';
-import { contact } from '../data';
+import { contact, heroImage } from '../data';
 import { HeroCarIllustration } from './CarIllustration';
 
 const marqueeItems = [
@@ -139,10 +140,11 @@ function _CarSilhouette({ className = '' }: { className?: string }) {
 }
 
 /**
- * Hero car — detailed SVG illustration (local, always loads).
- * Premium performance sedan with orange accents matching brand.
+ * Hero car — real photo from rent-kld.ru with SVG fallback.
  */
 function HeroCarImage() {
+  const [failed, setFailed] = useState(false);
+
   return (
     <div className="relative w-full max-w-[640px]">
       {/* Orange glow backdrop */}
@@ -151,23 +153,30 @@ function HeroCarImage() {
         style={{ background: 'radial-gradient(ellipse at center, #FF4D00 0%, transparent 65%)' }}
       />
 
-      {/* Illustrated premium car */}
-      <div className="relative overflow-hidden rounded-[8px] border-2 border-[#27272A] bg-gradient-to-br from-[#121214] to-[#0A0A0B] shadow-[0_30px_80px_rgba(255,77,0,0.15)] p-6 md:p-8">
-        <div className="relative z-10">
-          <HeroCarIllustration />
-        </div>
-        {/* Corner accent badge */}
+      <div className="relative overflow-hidden rounded-[8px] border-2 border-[#27272A] bg-gradient-to-br from-[#121214] to-[#0A0A0B] shadow-[0_30px_80px_rgba(255,77,0,0.15)]">
+        {failed ? (
+          <div className="p-6 md:p-8">
+            <HeroCarIllustration />
+          </div>
+        ) : (
+          <img
+            src={heroImage}
+            alt="Премиум авто — RENT-express"
+            referrerPolicy="no-referrer"
+            onError={() => setFailed(true)}
+            className="aspect-[16/11] w-full object-cover"
+          />
+        )}
+
+        {/* Overlay gradient for readability */}
+        {!failed && (
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0A0A0B]/60" />
+        )}
+
+        {/* Corner badge */}
         <div className="absolute bottom-4 right-4 z-10 rounded-[2px] bg-[#FF4D00] px-3 py-1.5 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg">
           Premium Fleet
         </div>
-        {/* Diagonal stripes overlay */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(135deg, transparent, transparent 30px, rgba(255,77,0,0.02) 30px, rgba(255,77,0,0.02) 31px)',
-          }}
-        />
       </div>
     </div>
   );

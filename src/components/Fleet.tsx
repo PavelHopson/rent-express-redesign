@@ -2,34 +2,17 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Fuel, Settings2 } from 'lucide-react';
 import { cars, categories, type Car, type CarCategory } from '../data';
+import CarIllustration from './CarIllustration';
 
 /**
- * Car image with graceful SVG fallback when Unsplash is unreachable.
- * Keeps the BRUTAL aesthetic even when CDN fails.
+ * Detailed SVG car illustration — custom-crafted per category.
+ * Local (no CDN), brand-themed palette, premium look.
  */
-function CarImage({ car, variant }: { car: Car; variant: 'suv' | 'coupe' | 'sedan' }) {
-  const [failed, setFailed] = useState(false);
-
-  if (failed || !car.image) {
-    return (
-      <div className="absolute inset-0 flex items-end justify-center p-3 transition-transform duration-500 group-hover:scale-[1.06]">
-        <CarSilhouette variant={variant} />
-      </div>
-    );
-  }
-
+function CarImage({ car }: { car: Car; variant?: string }) {
   return (
-    <>
-      <img
-        src={car.image}
-        alt={`${car.brand} ${car.model}`}
-        loading="lazy"
-        onError={() => setFailed(true)}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
-      />
-      {/* Dark gradient from bottom for text readability when overlayed */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A0B]/50 via-transparent to-transparent" />
-    </>
+    <div className="absolute inset-0 flex items-center justify-center p-4 transition-transform duration-500 group-hover:scale-[1.08]">
+      <CarIllustration car={car} />
+    </div>
   );
 }
 
@@ -47,88 +30,6 @@ const categoryLabel: Record<CarCategory, string> = {
   premium: 'ПРЕМИУМ',
   suv: 'SUV',
 };
-
-// Silhouette picker: SUVs get a taller body, coupes/flagships a sleeker line,
-// sedans the default profile.
-function pickSilhouette(car: Car): 'suv' | 'coupe' | 'sedan' {
-  if (car.category === 'suv') return 'suv';
-  if (car.category === 'premium' || car.model === 'E-Class' || car.model === 'S-Class') {
-    return 'coupe';
-  }
-  return 'sedan';
-}
-
-function CarSilhouette({ variant }: { variant: 'suv' | 'coupe' | 'sedan' }) {
-  // Wide monochrome SVG silhouettes. Accent stroke hints brand-specific shape.
-  if (variant === 'suv') {
-    return (
-      <svg viewBox="0 0 320 120" className="w-full h-full" aria-hidden="true">
-        <defs>
-          <linearGradient id="suv-g" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#27272A" />
-            <stop offset="100%" stopColor="#0A0A0B" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M18 92 L34 62 Q44 46 66 44 L128 40 Q150 38 170 46 L220 60 Q250 64 278 70 L298 78 Q308 82 308 92 L308 100 L18 100 Z"
-          fill="url(#suv-g)"
-          stroke="#3F3F46"
-          strokeWidth="1.5"
-        />
-        <rect x="64" y="52" width="56" height="14" rx="2" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-        <rect x="126" y="50" width="58" height="16" rx="2" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-        <circle cx="78" cy="100" r="16" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-        <circle cx="78" cy="100" r="7" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-        <circle cx="244" cy="100" r="16" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-        <circle cx="244" cy="100" r="7" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-      </svg>
-    );
-  }
-  if (variant === 'coupe') {
-    return (
-      <svg viewBox="0 0 320 120" className="w-full h-full" aria-hidden="true">
-        <defs>
-          <linearGradient id="coupe-g" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#27272A" />
-            <stop offset="100%" stopColor="#0A0A0B" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M14 96 L48 70 Q80 52 120 48 Q170 40 214 52 L270 68 Q298 74 306 90 L306 102 L14 102 Z"
-          fill="url(#coupe-g)"
-          stroke="#3F3F46"
-          strokeWidth="1.5"
-        />
-        <path d="M86 70 Q130 48 190 54 L214 66 L90 66 Z" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-        <circle cx="76" cy="102" r="15" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-        <circle cx="76" cy="102" r="6" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-        <circle cx="240" cy="102" r="15" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-        <circle cx="240" cy="102" r="6" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 320 120" className="w-full h-full" aria-hidden="true">
-      <defs>
-        <linearGradient id="sedan-g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#27272A" />
-          <stop offset="100%" stopColor="#0A0A0B" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M16 96 L44 74 Q72 58 116 54 Q164 50 208 58 L258 72 Q292 78 304 90 L304 102 L16 102 Z"
-        fill="url(#sedan-g)"
-        stroke="#3F3F46"
-        strokeWidth="1.5"
-      />
-      <path d="M84 72 Q124 56 186 58 L218 70 L88 70 Z" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-      <circle cx="80" cy="102" r="15" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-      <circle cx="80" cy="102" r="6" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-      <circle cx="238" cy="102" r="15" fill="#0A0A0B" stroke="#FF4D00" strokeWidth="2" />
-      <circle cx="238" cy="102" r="6" fill="#18181B" stroke="#52525B" strokeWidth="1" />
-    </svg>
-  );
-}
 
 function formatPrice(value: number): string {
   return value.toLocaleString('ru-RU');
@@ -199,7 +100,6 @@ export default function Fleet() {
         {/* Grid */}
         <div className="mt-10 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-2 lg:grid-cols-3">
           {visible.map((car, idx) => {
-            const silhouette = pickSilhouette(car);
             return (
               <motion.article
                 key={car.id}
@@ -223,7 +123,7 @@ export default function Fleet() {
 
                 {/* Car photo (with SVG fallback) */}
                 <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-[4px] bg-gradient-to-b from-[#121214] to-[#0A0A0B] border border-[#27272A]">
-                  <CarImage car={car} variant={silhouette} />
+                  <CarImage car={car} />
                   {car.priceOld && (
                     <span className="absolute left-3 top-3 z-10 rounded-[2px] bg-[#FF4D00] px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg">
                       -{Math.round(((car.priceOld - car.pricePerDay) / car.priceOld) * 100)}%

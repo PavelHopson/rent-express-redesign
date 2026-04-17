@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, Star, Zap } from 'lucide-react';
-import { contact, heroImage } from '../data';
+import { contact } from '../data';
+import { HeroCarIllustration } from './CarIllustration';
 
 const marqueeItems = [
   'ПРОКАТ АВТО',
@@ -12,7 +12,10 @@ const marqueeItems = [
   'ОФОРМЛЕНИЕ 10 МИН',
 ];
 
-function CarSilhouette({ className = '' }: { className?: string }) {
+// Legacy inline sedan (unused — kept for reference, tree-shaken by prod build)
+// @ts-expect-error unused
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _CarSilhouette({ className = '' }: { className?: string }) {
   // Side view of a generic sedan rendered inline.
   return (
     <svg
@@ -136,36 +139,35 @@ function CarSilhouette({ className = '' }: { className?: string }) {
 }
 
 /**
- * Hero hero car photo with SVG fallback.
- * Real Unsplash cinematic shot — falls back to brand-orange SVG on CDN failure.
+ * Hero car — detailed SVG illustration (local, always loads).
+ * Premium performance sedan with orange accents matching brand.
  */
 function HeroCarImage() {
-  const [failed, setFailed] = useState(false);
-
-  if (failed) {
-    return <CarSilhouette className="w-full max-w-[560px] drop-shadow-[0_30px_50px_rgba(255,77,0,0.25)]" />;
-  }
-
   return (
     <div className="relative w-full max-w-[640px]">
       {/* Orange glow backdrop */}
-      <div className="pointer-events-none absolute inset-0 -z-10 blur-[60px] opacity-40"
-        style={{ background: 'radial-gradient(ellipse at center, #FF4D00 0%, transparent 60%)' }} />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 blur-[80px] opacity-50"
+        style={{ background: 'radial-gradient(ellipse at center, #FF4D00 0%, transparent 65%)' }}
+      />
 
-      {/* Photo — cinematic aspect */}
-      <div className="relative overflow-hidden rounded-[8px] border-2 border-[#27272A] bg-[#0A0A0B] shadow-[0_30px_80px_rgba(255,77,0,0.15)]">
-        <img
-          src={heroImage}
-          alt="Премиум автомобиль в аренду"
-          onError={() => setFailed(true)}
-          className="aspect-[16/11] w-full object-cover"
-        />
-        {/* Subtle brand overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0A0A0B]/40" />
-        {/* Corner accent */}
+      {/* Illustrated premium car */}
+      <div className="relative overflow-hidden rounded-[8px] border-2 border-[#27272A] bg-gradient-to-br from-[#121214] to-[#0A0A0B] shadow-[0_30px_80px_rgba(255,77,0,0.15)] p-6 md:p-8">
+        <div className="relative z-10">
+          <HeroCarIllustration />
+        </div>
+        {/* Corner accent badge */}
         <div className="absolute bottom-4 right-4 z-10 rounded-[2px] bg-[#FF4D00] px-3 py-1.5 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white shadow-lg">
           Premium Fleet
         </div>
+        {/* Diagonal stripes overlay */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(135deg, transparent, transparent 30px, rgba(255,77,0,0.02) 30px, rgba(255,77,0,0.02) 31px)',
+          }}
+        />
       </div>
     </div>
   );

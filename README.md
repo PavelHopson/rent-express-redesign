@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# Rent Express
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Rent Express: Автомобиль → Даты → Заявка](docs/assets/repository-cover.svg)
 
-Currently, two official plugins are available:
+**Редизайн сайта.** Сайт аренды автомобилей: автопарк, параметры бронирования, этапы аренды и контакты.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<!-- repository-guide:start -->
+[Интерфейс](#readme-interface) · [Первый запуск](#readme-start) · [Что внутри](#readme-map) · [Путеводитель](docs/repository-guide.md#start) · [Карта кода](docs/repository-guide.md#map) · [Проверки](docs/repository-guide.md#checks) · [Границы и права](docs/repository-guide.md#boundaries)
 
-## React Compiler
+<a id="readme-interface"></a>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Интерфейс
 
-## Expanding the ESLint configuration
+![Rent Express — Главная RENT-express: предложение аренды и переход к выбору автомобиля.](docs/assets/ui/overview.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Главная RENT-express: предложение аренды и переход к выбору автомобиля.**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Локальный снимок от 8 сентября 2026: отдельный профиль браузера, без внешних API и пользовательских секретов. Это вид интерфейса, не подтверждение production-функций.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+<details>
+<summary><strong>Мобильный экран · 390 px</strong></summary>
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<img src="docs/assets/ui/mobile.png" alt="Rent Express — мобильный экран" width="390">
+
+</details>
+
+[Открыть в полном размере](docs/assets/ui/overview.png) · [Данные снимка](docs/assets/ui/capture.json)
+
+<a id="readme-map"></a>
+
+## Проект за минуту
+
+- **[Композиция сайта](<src/App.tsx>)** — Порядок секций и общий пользовательский маршрут.
+- **[Витрина и заявка](<src/components>)** — Автопарк, блок бронирования и контактные секции.
+- **[Контент](<src/data.ts>)** — Данные для отображения на сайте.
+
+<a id="readme-start"></a>
+
+## Начать локально
+
+**Среда:** Node.js и npm. **Источник:** [package.json](<package.json>).
+
+Из корня клонированного репозитория:
+
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Запуск сервера разработки не выполняет публикацию. Проверьте настройки окружения и основной пользовательский сценарий перед выпуском.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+<details>
+<summary><strong>Перед первым запуском и изменением кода</strong></summary>
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Команды сверены с исходниками 8 сентября 2026. Это инструкция, а не отметка об успешном запуске или текущем production.
+- Установка зависимостей может обращаться в registry и выполнять lifecycle scripts. Используйте отдельную рабочую среду и демонстрационные данные.
+- Форма бронирования в интерфейсе не означает серверное подтверждение заказа; интеграция и коммерческие сведения требуют отдельной проверки.
+
+
+</details>
+<!-- repository-guide:end -->
+
+## Что внутри
+
+React + TypeScript + Vite. Экран состоит из Header, Hero, BookingWidget, Fleet, Advantages, Process, Testimonials, FAQ, Contact, CTA и Footer; композиция задаётся в [src/App.tsx](src/App.tsx).
+
+## Локальный запуск
+
+Установите зависимости согласно package-lock.json (`npm ci`), затем выполните `npm run dev`. Проверки: `npm run typecheck`, `npm run lint`, `npm run build`. Команды здесь перечислены по package.json, а не объявлены успешно выполненными.
+
+## Границы проекта
+
+Это frontend-репозиторий. Доступность автомобилей, цены, отзывы и реальное подтверждение бронирования требуют отдельной проверки перед публичным использованием.

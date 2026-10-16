@@ -1,5 +1,9 @@
 # Rent Express
 
+<!-- project-links:start -->
+[Документация](docs/repository-guide.md) · [Код](https://github.com/PavelHopson/rent-express-redesign/tree/main) · [История изменений](https://github.com/PavelHopson/rent-express-redesign/commits/main/)
+<!-- project-links:end -->
+
 ![Rent Express: Автомобиль → Даты → Заявка](docs/assets/repository-cover.svg)
 
 **Редизайн сайта.** Сайт аренды автомобилей: автопарк, параметры бронирования, этапы аренды и контакты.
